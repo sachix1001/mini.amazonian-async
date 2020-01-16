@@ -41,15 +41,20 @@ class ReviewBuilder {
   }
 
   async buildReviewsAsyncAwait() {
-    let [products, reviews, users] = await Promise.all([
-      readFile("./data/products.json"),
-      readFile("./data/reviews.json"),
-      readFile("./data/users.json"),
-    ]);
-    products = JSON.parse(products);
-    reviews = JSON.parse(reviews);
-    users = JSON.parse(users);
-    return produceResult({ products, reviews, users });
+    // eslint-disable-next-line no-useless-catch
+    try {
+      let [products, reviews, users] = await Promise.all([
+        readFile("./data/products.json"),
+        readFile("./data/reviews.json"),
+        readFile("./data/users.json"),
+      ]);
+      products = JSON.parse(products);
+      reviews = JSON.parse(reviews);
+      users = JSON.parse(users);
+      return produceResult({ products, reviews, users });
+    } catch (err) {
+      throw err;
+    }
   }
 }
 
